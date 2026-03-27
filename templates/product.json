@@ -467,11 +467,23 @@
         "bullet_3_desc": "The ultra soft silicone adapts to your ear ensuring the earplugs stay in place all the time",
         "product_image": "shopify://shop_images/gempages_519052065381549017-c45cba67-cb97-444c-bffc-04fd16dddd01.webp"
       }
+    },
+    "artevive_features_8Gy8ra": {
+      "type": "artevive-features",
+      "name": "Artevive Features",
+      "settings": {
+        "heading": "Reduce wind noise, still hear the intercom & traffic",
+        "feature_text_1": "Reducing the noise by 27 dB it is the perfect mix of offering hearing protection and letting enough sound through to still hear your music/intercom and the traffic arround you",
+        "feature_text_2": "Selective sound technology is the secret that allows you to hear everything while reducing the wind noise by a lot",
+        "feature_text_3": "Forget the one time use earplugs. These are reusable meaning you can use these for life!",
+        "feature_text_4": ""
+      }
     }
   },
   "order": [
     "main",
     "product_recommendations_qggXJq",
-    "artevive_comfort_YcXynV"
+    "artevive_comfort_YcXynV",
+    "artevive_features_8Gy8ra"
   ]
 }
