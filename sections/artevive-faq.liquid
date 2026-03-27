@@ -57,8 +57,22 @@
 </section>
 
 <style>
+  /* ── CSS variables from schema settings ── */
+  #art-faq-section {
+    --faq-bg:            {{ section.settings.section_bg }};
+    --faq-heading-color: {{ section.settings.heading_color }};
+    --faq-item-bg:       {{ section.settings.item_bg }};
+    --faq-border-color:  {{ section.settings.border_color }};
+    --faq-border-width:  {{ section.settings.border_width }}px;
+    --faq-border-radius: {{ section.settings.border_radius }}px;
+    --faq-item-gap:      {{ section.settings.item_gap }}px;
+    --faq-question-color:{{ section.settings.question_color }};
+    --faq-answer-color:  {{ section.settings.answer_color }};
+    --faq-icon-color:    {{ section.settings.icon_color }};
+  }
+
   .art-faq {
-    background-color: #ffffff;
+    background-color: var(--faq-bg);
     font-family: 'Poppins', sans-serif;
   }
 
@@ -75,7 +89,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 40px;
     font-weight: 600;
-    color: #161723;
+    color: var(--faq-heading-color);
     letter-spacing: 0.5px;
     line-height: 1.2;
     margin: 0;
@@ -86,15 +100,15 @@
   .art-faq__list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--faq-item-gap);
   }
 
-  /* --- Each accordion item: card style --- */
+  /* --- Each accordion item --- */
   .art-faq__item {
-    border: 1px solid #E5E7EB;
-    border-radius: 8px;
+    border: var(--faq-border-width) solid var(--faq-border-color);
+    border-radius: var(--faq-border-radius);
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: var(--faq-item-bg);
   }
 
   /* --- Trigger (header) --- */
@@ -112,14 +126,14 @@
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #161723;
+    color: var(--faq-question-color);
     letter-spacing: 0.69px;
     line-height: 1.4;
-    transition: color 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
   .art-faq__trigger:hover {
-    color: #161723;
+    opacity: 0.8;
   }
 
   .art-faq__question {
@@ -131,7 +145,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
+  }
+
+  /* Aplica el color del ícono via currentColor */
+  .art-faq__icon-plus,
+  .art-faq__icon-minus {
+    stroke: var(--faq-icon-color) !important;
   }
 
   /* --- Body: max-height collapse --- */
@@ -150,7 +169,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 400;
-    color: #424153;
+    color: var(--faq-answer-color);
     letter-spacing: 0.5px;
     line-height: 1.7;
   }
@@ -221,6 +240,86 @@
       "id": "heading",
       "label": "Heading",
       "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#161723"
+    },
+    {
+      "type": "color",
+      "id": "item_bg",
+      "label": "Item background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question text color",
+      "default": "#161723"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer text color",
+      "default": "#424153"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color (+/−)",
+      "default": "#161723"
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between items",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
     },
     {
       "type": "header",
