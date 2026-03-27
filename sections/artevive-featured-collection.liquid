@@ -1,0 +1,499 @@
+{% comment %}
+  Artevive Featured Collection
+  Replicates the 4-column product grid from arteviveearplugs.com
+  Custom star ratings (no Loox dependency)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Colors:
+    Text main:    #121212
+    Text muted:   rgba(18,18,18,0.75)
+    Sale price:   #e3001b
+    Badge bg:     #121212
+    Badge text:   #ffffff
+    Stars fill:   #e3001b
+    Stars empty:  #d1d1d1
+    Button bg:    #00adef
+    Button text:  #ffffff
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% endcomment %}
+
+{% liquid
+  assign collection_obj = section.settings.collection
+  assign max_products   = section.settings.max_products
+  assign view_all_label = section.settings.view_all_label
+  assign section_title  = section.settings.section_title
+%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<section class="art-fc" id="art-fc-{{ section.id }}">
+  <div class="art-fc__inner">
+
+    {% if section_title != blank %}
+      <h2 class="art-fc__title">{{ section_title }}</h2>
+    {% endif %}
+
+    <div class="art-fc__grid">
+      {% if collection_obj != blank and collection_obj.products_count > 0 %}
+        {% for product in collection_obj.products limit: max_products %}
+          {% assign on_sale = false %}
+          {% if product.compare_at_price > product.price %}
+            {% assign on_sale = true %}
+          {% endif %}
+
+          {%- comment -%} Rating from metafields (Loox stores them here) {%- endcomment -%}
+          {% assign rating_value = product.metafields.loox.avg_rating | default: product.metafields.reviews.rating.value %}
+          {% assign rating_count = product.metafields.loox.num_reviews | default: product.metafields.reviews.rating_count %}
+
+          <a class="art-fc__card" href="{{ product.url }}">
+            <div class="art-fc__media">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 800 }}"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  width="800"
+                  height="800"
+                  loading="lazy"
+                  class="art-fc__img"
+                >
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'art-fc__img art-fc__img--placeholder' }}
+              {% endif %}
+
+              {% if on_sale %}
+                <span class="art-fc__badge">Sale</span>
+              {% endif %}
+            </div>
+
+            <div class="art-fc__info">
+              <p class="art-fc__name">{{ product.title }}</p>
+
+              {%- comment -%} Custom star rating — no app dependency {%- endcomment -%}
+              {% if rating_value != blank %}
+                {% assign rating_num = rating_value | times: 1.0 %}
+                {% assign full_stars  = rating_num | floor %}
+                {% assign half_check  = rating_num | minus: full_stars %}
+                <div class="art-fc__rating"
+                     title="{{ rating_num }} rating ({{ rating_count }} votes)">
+                  <div class="art-fc__stars" aria-hidden="true">
+                    {%- for i in (1..5) -%}
+                      {%- if i <= full_stars -%}
+                        <svg class="art-star art-star--full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      {%- elsif half_check >= 0.5 and i == full_stars | plus: 1 -%}
+                        <svg class="art-star art-star--half" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <defs><linearGradient id="art-half-{{ section.id }}-{{ forloop.index }}"><stop offset="50%" stop-color="#e3001b"/><stop offset="50%" stop-color="#d1d1d1"/></linearGradient></defs>
+                          <path fill="url(#art-half-{{ section.id }}-{{ forloop.index }})" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      {%- else -%}
+                        <svg class="art-star art-star--empty" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                  {% if rating_count != blank %}
+                    <span class="art-fc__raters">({{ rating_count | number_with_delimiter }})</span>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              <div class="art-fc__price">
+                {% if on_sale %}
+                  <span class="art-fc__price--compare">
+                    {{ product.compare_at_price | money }}
+                  </span>
+                  <span class="art-fc__price--sale">
+                    {{ product.price | money }}
+                  </span>
+                {% else %}
+                  <span class="art-fc__price--regular">
+                    {{ product.price | money }}
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+
+      {% else %}
+        {%- comment -%} Placeholder cards when no collection is selected {%- endcomment -%}
+        {% for i in (1..max_products) %}
+          <div class="art-fc__card art-fc__card--placeholder">
+            <div class="art-fc__media">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'art-fc__img art-fc__img--placeholder' }}
+              <span class="art-fc__badge">Sale</span>
+            </div>
+            <div class="art-fc__info">
+              <p class="art-fc__name">Product Title</p>
+              <div class="art-fc__rating">
+                <div class="art-fc__stars" aria-hidden="true">
+                  {% for s in (1..5) %}
+                    <svg class="art-star art-star--full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  {% endfor %}
+                </div>
+                <span class="art-fc__raters">(0)</span>
+              </div>
+              <div class="art-fc__price">
+                <span class="art-fc__price--compare">$43.99 USD</span>
+                <span class="art-fc__price--sale">$29.99 USD</span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if view_all_label != blank and collection_obj != blank %}
+      <div class="art-fc__footer">
+        <a class="art-fc__view-all" href="{{ collection_obj.url }}">
+          {{ view_all_label }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  /* ── Reset / Base ── */
+  .art-fc *,
+  .art-fc *::before,
+  .art-fc *::after {
+    box-sizing: border-box;
+  }
+
+  /* ── Section wrapper ── */
+  .art-fc {
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+    color: #121212;
+  }
+
+  .art-fc__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ── Optional heading ── */
+  .art-fc__title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #121212;
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ── Product grid ── */
+  .art-fc__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  /* ── Card ── */
+  .art-fc__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+    transition: none;
+  }
+
+  .art-fc__card:hover .art-fc__img {
+    transform: scale(1.03);
+  }
+
+  /* ── Media / image wrapper ── */
+  .art-fc__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f5f5f5;
+    border-radius: 0;
+  }
+
+  .art-fc__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .art-fc__img--placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── Sale badge ── */
+  .art-fc__badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 5px 10px;
+    border-radius: 50px;
+    letter-spacing: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ── Card info block ── */
+  .art-fc__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 0 0;
+  }
+
+  /* ── Product name ── */
+  .art-fc__name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14.95px;
+    font-weight: 500;
+    color: #121212;
+    margin: 0;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  /* ── Star rating row ── */
+  .art-fc__rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .art-fc__stars {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .art-star {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .art-star--full path {
+    fill: #e3001b;
+  }
+
+  .art-star--empty path {
+    fill: #d1d1d1;
+  }
+
+  .art-fc__raters {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: rgba(18, 18, 18, 0.75);
+    line-height: 1;
+  }
+
+  /* ── Price ── */
+  .art-fc__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .art-fc__price--compare {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: rgba(18, 18, 18, 0.75);
+    text-decoration: line-through;
+    line-height: 1.4;
+  }
+
+  .art-fc__price--sale {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #e3001b;
+    line-height: 1.4;
+  }
+
+  .art-fc__price--regular {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #121212;
+    line-height: 1.4;
+  }
+
+  /* ── View all footer ── */
+  .art-fc__footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .art-fc__view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00adef;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 12px 32px;
+    letter-spacing: 0.02em;
+    transition: background-color 0.2s ease;
+    min-width: 160px;
+  }
+
+  .art-fc__view-all:hover {
+    background-color: #0099d4;
+  }
+
+  /* ══════════════════════════════════════
+     Responsive — Tablet (≤ 989px)
+  ══════════════════════════════════════ */
+  @media screen and (max-width: 989px) {
+    .art-fc__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .art-fc__name {
+      font-size: 14px;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     Responsive — Mobile (≤ 749px)
+  ══════════════════════════════════════ */
+  @media screen and (max-width: 749px) {
+    .art-fc__inner {
+      padding: 32px 16px;
+      gap: 20px;
+    }
+
+    .art-fc__title {
+      font-size: 24px;
+    }
+
+    .art-fc__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .art-fc__name {
+      font-size: 12px;
+    }
+
+    .art-fc__price--compare,
+    .art-fc__price--sale,
+    .art-fc__price--regular {
+      font-size: 12px;
+    }
+
+    .art-star {
+      width: 11px;
+      height: 11px;
+    }
+
+    .art-fc__raters {
+      font-size: 11px;
+    }
+
+    .art-fc__badge {
+      font-size: 10px;
+      padding: 4px 8px;
+      bottom: 8px;
+      left: 8px;
+    }
+
+    .art-fc__view-all {
+      font-size: 13px;
+      padding: 10px 24px;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     Desktop large (≥ 1200px) — exact match
+  ══════════════════════════════════════ */
+  @media screen and (min-width: 1200px) {
+    .art-fc__name {
+      font-size: 20.7px;
+    }
+
+    .art-fc__price--compare,
+    .art-fc__price--sale,
+    .art-fc__price--regular {
+      font-size: 16px;
+    }
+
+    .art-star {
+      width: 16px;
+      height: 16px;
+    }
+
+    .art-fc__raters {
+      font-size: 13px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Artevive Featured Collection",
+  "tag": "div",
+  "class": "artevive-featured-collection-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": ""
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Maximum products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "\"View all\" button label",
+      "default": "View all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artevive Featured Collection"
+    }
+  ]
+}
+{% endschema %}

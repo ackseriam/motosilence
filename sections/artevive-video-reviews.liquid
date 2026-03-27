@@ -1,0 +1,683 @@
+{% comment %}
+  Artevive Video Reviews Slider
+  Replicates the Loox video-slider-widget from arteviveearplugs.com
+  Layout: "spotlight" carousel — horizontal scroll, center card featured
+  Custom HTML/CSS/JS (no Loox / no app dependency)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Confirmed values from DOM:
+    border-radius:  16px
+    border-width:   1px
+    border-color:   rgba(18,18,18,0.15)
+    text-color:     #ffffff  (overlay on dark video thumb)
+    rating stars:   #e3001b
+    play-button:    #ffffff (circle, semi-transparent bg)
+    shadow:         0 4px 24px rgba(0,0,0,0.18)
+    hide-arrows-mobile: true
+    auto-play:      enabled (video plays when card is active)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% endcomment %}
+
+{% liquid
+  assign section_title = section.settings.section_title
+  assign show_title    = section.settings.show_title
+
+  assign videos = section.blocks | where: "type", "video_review"
+%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<section class="art-vr" id="art-vr-{{ section.id }}">
+  <div class="art-vr__inner">
+
+    {% if show_title and section_title != blank %}
+      <h2 class="art-vr__title">{{ section_title }}</h2>
+    {% endif %}
+
+    <div class="art-vr__slider-wrap">
+      {%- comment -%} Prev arrow {%- endcomment -%}
+      <button class="art-vr__arrow art-vr__arrow--prev" aria-label="Previous">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.45)"/>
+          <path d="M14 7l-5 5 5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <div class="art-vr__track-viewport">
+        <div class="art-vr__track" id="art-vr-track-{{ section.id }}">
+
+          {% if videos.size > 0 %}
+            {% for block in videos %}
+              {% assign stars_num = block.settings.rating | plus: 0 %}
+              <div class="art-vr__slide" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                <div class="art-vr__card">
+                  {%- comment -%} Video / poster image ── {%- endcomment -%}
+                  {% if block.settings.video != blank %}
+                    <video
+                      class="art-vr__video"
+                      src="{{ block.settings.video }}"
+                      poster="{% if block.settings.poster != blank %}{{ block.settings.poster | image_url: width: 480 }}{% endif %}"
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                    ></video>
+                  {% elsif block.settings.poster != blank %}
+                    <img
+                      class="art-vr__video art-vr__video--img"
+                      src="{{ block.settings.poster | image_url: width: 480 }}"
+                      alt="{{ block.settings.reviewer_name | escape }}"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="art-vr__video art-vr__video--placeholder"></div>
+                  {% endif %}
+
+                  {%- comment -%} Dark gradient overlay ── {%- endcomment -%}
+                  <div class="art-vr__overlay"></div>
+
+                  {%- comment -%} Play button ── {%- endcomment -%}
+                  <button class="art-vr__play" aria-label="Play review video">
+                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="22" cy="22" r="22" fill="rgba(0,0,0,0.45)"/>
+                      <path d="M17 13.5l14 8.5-14 8.5V13.5z" fill="#ffffff"/>
+                    </svg>
+                  </button>
+
+                  {%- comment -%} Reviewer info (bottom overlay) ── {%- endcomment -%}
+                  <div class="art-vr__reviewer">
+                    {% if block.settings.reviewer_name != blank %}
+                      <span class="art-vr__reviewer-name">
+                        {{ block.settings.reviewer_name }}
+                        <svg class="art-vr__verified" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="12" fill="#00adef"/>
+                          <path d="M7 12l4 4 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    {% endif %}
+                    <div class="art-vr__stars" aria-label="{{ stars_num }} stars">
+                      {%- for s in (1..5) -%}
+                        {%- if s <= stars_num -%}
+                          <svg class="art-vr__star art-vr__star--full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        {%- else -%}
+                          <svg class="art-vr__star art-vr__star--empty" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+
+          {% else %}
+            {%- comment -%} Demo placeholders — shown when no blocks are configured {%- endcomment -%}
+            {% assign demo_names = "Damien C.,Earl G.,David S.,Daniel S.,Kim D." | split: "," %}
+            {% for name in demo_names %}
+              <div class="art-vr__slide" data-index="{{ forloop.index0 }}">
+                <div class="art-vr__card">
+                  <div class="art-vr__video art-vr__video--placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'art-vr__placeholder-svg' }}
+                  </div>
+                  <div class="art-vr__overlay"></div>
+                  <button class="art-vr__play" aria-label="Play review video">
+                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="22" cy="22" r="22" fill="rgba(0,0,0,0.45)"/>
+                      <path d="M17 13.5l14 8.5-14 8.5V13.5z" fill="#ffffff"/>
+                    </svg>
+                  </button>
+                  <div class="art-vr__reviewer">
+                    <span class="art-vr__reviewer-name">
+                      {{ name }}
+                      <svg class="art-vr__verified" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="12" fill="#00adef"/>
+                        <path d="M7 12l4 4 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                    <div class="art-vr__stars">
+                      {% for s in (1..5) %}
+                        <svg class="art-vr__star art-vr__star--full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+        </div>
+      </div>
+
+      {%- comment -%} Next arrow {%- endcomment -%}
+      <button class="art-vr__arrow art-vr__arrow--next" aria-label="Next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.45)"/>
+          <path d="M10 7l5 5-5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Reset ── */
+  .art-vr *,
+  .art-vr *::before,
+  .art-vr *::after {
+    box-sizing: border-box;
+  }
+
+  /* ── Section ── */
+  .art-vr {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
+
+  .art-vr__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 48px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ── Section title ── */
+  .art-vr__title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #121212;
+    text-align: center;
+    margin: 0;
+    padding: 0 20px;
+    line-height: 1.2;
+  }
+
+  /* ── Slider outer wrap (contains arrows + viewport) ── */
+  .art-vr__slider-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ── Track viewport (clips overflow) ── */
+  .art-vr__track-viewport {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Track (scrollable row of slides) ── */
+  .art-vr__track {
+    display: flex;
+    gap: 12px;
+    padding: 20px 0;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    align-items: center;
+  }
+
+  /* ── Slide ── */
+  .art-vr__slide {
+    flex: 0 0 auto;
+    width: 200px;
+    transition: width 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0.6;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+
+  /* Active / spotlight slide */
+  .art-vr__slide.is-active {
+    width: 260px;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ── Card ── */
+  .art-vr__card {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid rgba(18, 18, 18, 0.15);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    aspect-ratio: 9 / 16;
+    background: #1a1a1a;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* ── Video / image / placeholder ── */
+  .art-vr__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+  }
+
+  .art-vr__video--placeholder {
+    background: linear-gradient(160deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+
+  .art-vr__placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+
+  /* ── Dark gradient overlay (bottom) ── */
+  .art-vr__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.12) 50%,
+      transparent 100%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* ── Play button ── */
+  .art-vr__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.2s ease;
+    line-height: 0;
+  }
+
+  .art-vr__play:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  /* ── Reviewer info ── */
+  .art-vr__reviewer {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .art-vr__reviewer-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.3;
+  }
+
+  .art-vr__verified {
+    flex-shrink: 0;
+  }
+
+  .art-vr__stars {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .art-vr__star {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .art-vr__star--full path {
+    fill: #e3001b;
+  }
+
+  .art-vr__star--empty path {
+    fill: rgba(255, 255, 255, 0.35);
+  }
+
+  /* ── Navigation arrows ── */
+  .art-vr__arrow {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    z-index: 3;
+    line-height: 0;
+    transition: opacity 0.2s ease;
+    opacity: 0.85;
+  }
+
+  .art-vr__arrow:hover {
+    opacity: 1;
+  }
+
+  .art-vr__arrow:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+
+  /* ══════════════════════════════════════
+     Responsive — Mobile (≤ 749px)
+     hide-arrows-mobile: arrows hidden
+  ══════════════════════════════════════ */
+  @media screen and (max-width: 749px) {
+    .art-vr__inner {
+      padding: 32px 0;
+      gap: 20px;
+    }
+
+    .art-vr__title {
+      font-size: 24px;
+      padding: 0 16px;
+    }
+
+    .art-vr__arrow {
+      display: none;
+    }
+
+    /* On mobile: wider slides, horizontal scroll */
+    .art-vr__track-viewport {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .art-vr__track-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    .art-vr__track {
+      padding: 12px 16px;
+      transform: none !important; /* let native scroll handle it on mobile */
+    }
+
+    .art-vr__slide {
+      width: 160px;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .art-vr__slide.is-active {
+      width: 180px;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     Large desktop (≥ 1200px)
+  ══════════════════════════════════════ */
+  @media screen and (min-width: 1200px) {
+    .art-vr__slide {
+      width: 220px;
+    }
+
+    .art-vr__slide.is-active {
+      width: 290px;
+    }
+
+    .art-vr__track {
+      gap: 16px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initSlider('art-vr-{{ section.id }}');
+  });
+
+  function initSlider(sectionId) {
+    var section    = document.getElementById(sectionId);
+    if (!section) return;
+
+    var track      = section.querySelector('.art-vr__track');
+    var slides     = Array.from(section.querySelectorAll('.art-vr__slide'));
+    var prevBtn    = section.querySelector('.art-vr__arrow--prev');
+    var nextBtn    = section.querySelector('.art-vr__arrow--next');
+    var viewport   = section.querySelector('.art-vr__track-viewport');
+
+    if (!track || slides.length === 0) return;
+
+    var activeIndex = Math.floor(slides.length / 2);
+    var isMobile    = window.innerWidth <= 749;
+
+    /* ── helpers ── */
+    function setActive(idx) {
+      activeIndex = Math.max(0, Math.min(idx, slides.length - 1));
+      slides.forEach(function (slide, i) {
+        slide.classList.toggle('is-active', i === activeIndex);
+      });
+      if (!isMobile) centerActive();
+      updateArrows();
+      handleAutoplay();
+    }
+
+    function centerActive() {
+      var activeSlide = slides[activeIndex];
+      if (!activeSlide) return;
+
+      var viewportW  = viewport.offsetWidth;
+      var slideLeft  = activeSlide.offsetLeft;
+      var slideW     = activeSlide.offsetWidth;
+      var trackLeft  = (viewportW / 2) - (slideLeft + slideW / 2);
+
+      /* Clamp so we don't over-scroll */
+      var trackW     = track.scrollWidth;
+      var minLeft    = viewportW - trackW - 20;
+      var maxLeft    = 0;
+      trackLeft      = Math.min(maxLeft, Math.max(minLeft, trackLeft));
+
+      track.style.transform = 'translateX(' + trackLeft + 'px)';
+    }
+
+    function updateArrows() {
+      if (prevBtn) prevBtn.disabled = activeIndex === 0;
+      if (nextBtn) nextBtn.disabled = activeIndex === slides.length - 1;
+    }
+
+    /* ── autoplay ── */
+    function handleAutoplay() {
+      slides.forEach(function (slide) {
+        var video = slide.querySelector('video');
+        if (!video) return;
+        if (slide.classList.contains('is-active')) {
+          video.play().catch(function () {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }
+
+    /* ── play button click — toggle pause/play ── */
+    slides.forEach(function (slide, i) {
+      var playBtn = slide.querySelector('.art-vr__play');
+      var video   = slide.querySelector('video');
+
+      slide.addEventListener('click', function () {
+        if (i !== activeIndex) {
+          setActive(i);
+          return;
+        }
+        if (video) {
+          if (video.paused) {
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+        }
+      });
+
+      if (playBtn && video) {
+        playBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (i !== activeIndex) {
+            setActive(i);
+            return;
+          }
+          if (video.paused) {
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+        });
+      }
+    });
+
+    /* ── arrow buttons ── */
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        setActive(activeIndex - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        setActive(activeIndex + 1);
+      });
+    }
+
+    /* ── keyboard navigation ── */
+    section.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft')  setActive(activeIndex - 1);
+      if (e.key === 'ArrowRight') setActive(activeIndex + 1);
+    });
+
+    /* ── resize handler ── */
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        isMobile = window.innerWidth <= 749;
+        if (!isMobile) {
+          /* Re-enable JS-based centering on desktop */
+          track.style.transform = '';
+          setActive(activeIndex);
+        }
+      }, 120);
+    });
+
+    /* ── init ── */
+    setActive(activeIndex);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Artevive Video Reviews",
+  "tag": "div",
+  "class": "artevive-video-reviews-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show section title",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "What Our Riders Say"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_review",
+      "name": "Video Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video",
+          "label": "Video URL (.mp4)",
+          "info": "Paste the full URL of the video file (e.g. from Files in Shopify admin)"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster / thumbnail image",
+          "info": "Shown before the video loads. Portrait orientation (9:16) recommended."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Reviewer"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artevive Video Reviews",
+      "blocks": [
+        {
+          "type": "video_review",
+          "settings": {
+            "reviewer_name": "Damien C.",
+            "rating": 5
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "reviewer_name": "Earl G.",
+            "rating": 5
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "reviewer_name": "David S.",
+            "rating": 5
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "reviewer_name": "Daniel S.",
+            "rating": 5
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "reviewer_name": "Kim D.",
+            "rating": 5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
