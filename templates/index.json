@@ -124,6 +124,7 @@
           "type": "video_review",
           "settings": {
             "video": "",
+            "poster": "shopify://shop_images/6zxNEVYYT_AAi4m4IQA_orig_thumb_37c9823b-a4c6-49f0-8785-970e1a12ad23.jpg",
             "reviewer_name": "David S.",
             "rating": 5
           }
