@@ -222,7 +222,7 @@
                 "option_3_compare_price": "",
                 "option_3_quantity": 6,
                 "option_3_badge": "",
-                "option_3_free_shipping": true,
+                "option_3_free_shipping": false,
                 "card_bg": "#f1fbff",
                 "card_border": "#c5d8ea",
                 "card_bg_selected": "#ffffff",
