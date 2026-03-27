@@ -194,6 +194,28 @@
               },
               "blocks": {}
             },
+            "bundle_picker_H9yKrz": {
+              "type": "bundle-picker",
+              "name": "Bundle Picker",
+              "settings": {
+                "option_name": "Sets",
+                "title": "Buy More & Save!",
+                "option_1_subtitle": "2x Earplug Sets",
+                "option_1_badge": "",
+                "option_1_free_shipping": false,
+                "option_2_subtitle": "4x Earplug Sets",
+                "option_2_badge": "Most Popular",
+                "option_2_free_shipping": true,
+                "option_3_subtitle": "6x Earplug Sets",
+                "option_3_badge": "",
+                "option_3_free_shipping": true,
+                "padding-block-start": 0,
+                "padding-block-end": 8,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -261,6 +283,7 @@
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "bundle_picker_H9yKrz",
             "buy_buttons_eYQEYi",
             "text_aEtTtq"
           ]
