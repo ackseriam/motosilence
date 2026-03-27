@@ -202,7 +202,7 @@
                 "title": "Buy More & Save!",
                 "option_1_subtitle": "2x Earplug Sets",
                 "option_1_badge": "",
-                "option_1_free_shipping": false,
+                "option_1_free_shipping": true,
                 "option_2_subtitle": "4x Earplug Sets",
                 "option_2_badge": "Most Popular",
                 "option_2_free_shipping": true,
