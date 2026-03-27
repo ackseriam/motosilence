@@ -276,6 +276,77 @@
     },
     {
       "type": "header",
+      "content": "Review Card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review",
+      "label": "Show review card in gallery",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "review_position",
+      "label": "Insert after image #",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2",
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "review_avatar",
+      "label": "Avatar image",
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "range",
+      "id": "review_stars",
+      "label": "Stars",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "textarea",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "It calms the constant drone of the wind noise but allows me to hear traffic to stay safe",
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "text",
+      "id": "review_author",
+      "label": "Author name",
+      "default": "Michael S.",
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "review_verified",
+      "label": "Show Verified Customer badge",
+      "default": true,
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "select",
+      "id": "review_source",
+      "label": "Review source icon",
+      "options": [
+        { "value": "google", "label": "Google" },
+        { "value": "none",   "label": "None" }
+      ],
+      "default": "google",
+      "visible_if": "{{ block.settings.show_review }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
