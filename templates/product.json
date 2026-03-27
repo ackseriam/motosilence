@@ -441,10 +441,24 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "artevive_comfort_YcXynV": {
+      "type": "artevive-comfort",
+      "name": "Artevive Comfort",
+      "settings": {
+        "heading": "Comfort for all ears",
+        "bullet_1_title": "All day comfort under helmet",
+        "bullet_1_desc": "The earplug hides in your ear canal so it doesn't rub against the helmet, while still being able to easily insert and take out the earplug.",
+        "bullet_2_title": "4 Different sizes",
+        "bullet_2_desc": "Every order includes 4 different ear tip sizes (S-XL) to fit all ear types!",
+        "bullet_3_title": "No falling out",
+        "bullet_3_desc": "The ultra soft silicone adapts to your ear ensuring the earplugs stay in place all the time"
+      }
     }
   },
   "order": [
     "main",
-    "product_recommendations_qggXJq"
+    "product_recommendations_qggXJq",
+    "artevive_comfort_YcXynV"
   ]
 }
