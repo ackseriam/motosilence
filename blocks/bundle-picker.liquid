@@ -4,7 +4,24 @@
 
 <div
   class="bundle-picker spacing-style"
-  style="{% render 'spacing-style', settings: block_settings %}"
+  style="
+    {% render 'spacing-style', settings: block_settings %}
+    --bp-card-bg: {{ block_settings.card_bg }};
+    --bp-card-border: {{ block_settings.card_border }};
+    --bp-card-bg-selected: {{ block_settings.card_bg_selected }};
+    --bp-card-border-selected: {{ block_settings.card_border_selected }};
+    --bp-radio-color: {{ block_settings.radio_color }};
+    --bp-badge-bg: {{ block_settings.badge_bg }};
+    --bp-badge-text: {{ block_settings.badge_text }};
+    --bp-shipping-bg: {{ block_settings.shipping_bg }};
+    --bp-shipping-text: {{ block_settings.shipping_text }};
+    --bp-header-line: {{ block_settings.header_line_color }};
+    --bp-header-text: {{ block_settings.header_text_color }};
+    --bp-title-color: {{ block_settings.title_color }};
+    --bp-subtitle-color: {{ block_settings.subtitle_color }};
+    --bp-price-color: {{ block_settings.price_color }};
+    --bp-compare-color: {{ block_settings.compare_color }};
+  "
   data-bundle-picker="{{ block.id }}"
   {{ block.shopify_attributes }}
 >
@@ -116,7 +133,7 @@
     width: 100%;
   }
 
-  /* ── Header "Buy More & Save!" with side lines ── */
+  /* ── Header ── */
   .bundle-picker__header {
     display: flex;
     align-items: center;
@@ -124,7 +141,7 @@
     text-align: center;
     font-weight: 700;
     font-size: 0.88em;
-    color: #222;
+    color: var(--bp-header-text, #222);
     margin-bottom: 10px;
   }
 
@@ -133,7 +150,7 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: #c5d8ea;
+    background: var(--bp-header-line, #c5d8ea);
   }
 
   /* ── Options list ── */
@@ -148,17 +165,17 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    border: 1.5px solid #c5d8ea;
+    border: 1.5px solid var(--bp-card-border, #c5d8ea);
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
     transition: border-color 0.15s ease, background 0.15s ease;
-    background: #f0f8ff;
+    background: var(--bp-card-bg, #f0f8ff);
   }
 
   .bundle-picker__card--selected {
-    border: 2px solid #1a90f5;
-    background: #e4f2ff;
+    border: 2px solid var(--bp-card-border-selected, #1a90f5);
+    background: var(--bp-card-bg-selected, #e4f2ff);
   }
 
   .bundle-picker__card input[type='radio'] {
@@ -169,13 +186,13 @@
     pointer-events: none;
   }
 
-  /* ── Badge "Most Popular" ── */
+  /* ── Badge ── */
   .bundle-picker__badge {
     position: absolute;
     top: 0;
     right: 0;
-    background: #e53935;
-    color: #fff;
+    background: var(--bp-badge-bg, #e53935);
+    color: var(--bp-badge-text, #fff);
     font-size: 0.7em;
     font-weight: 700;
     padding: 5px 12px;
@@ -207,12 +224,10 @@
   }
 
   .bundle-picker__card--selected .bundle-picker__radio-dot {
-    border-color: #1a90f5;
-    background: #1a90f5;
-    border-width: 2px;
+    border-color: var(--bp-radio-color, #1a90f5);
+    background: var(--bp-radio-color, #1a90f5);
   }
 
-  /* inner white dot */
   .bundle-picker__card--selected .bundle-picker__radio-dot::after {
     content: '';
     position: absolute;
@@ -225,7 +240,7 @@
     background: #fff;
   }
 
-  /* ── Text block ── */
+  /* ── Text ── */
   .bundle-picker__card-text {
     flex: 1;
     display: flex;
@@ -237,16 +252,16 @@
     font-weight: 800;
     font-size: 20px;
     line-height: 1.2;
-    color: #111;
+    color: var(--bp-title-color, #111);
   }
 
   .bundle-picker__card-subtitle {
     font-size: 0.78em;
-    color: #6a8099;
+    color: var(--bp-subtitle-color, #6a8099);
     font-weight: 400;
   }
 
-  /* ── Price block ── */
+  /* ── Price ── */
   .bundle-picker__card-price {
     display: flex;
     flex-direction: column;
@@ -258,13 +273,13 @@
   .bundle-picker__price {
     font-weight: 800;
     font-size: 1.1em;
-    color: #111;
+    color: var(--bp-price-color, #111);
     line-height: 1.2;
   }
 
   .bundle-picker__compare-price {
     font-size: 0.78em;
-    color: #8faabb;
+    color: var(--bp-compare-color, #8faabb);
     text-decoration: line-through;
   }
 
@@ -273,8 +288,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #1890ff;
-    color: #fff;
+    background: var(--bp-shipping-bg, #1890ff);
+    color: var(--bp-shipping-text, #fff);
     width: 100%;
     height: 43px;
     font-size: 0.82em;
@@ -437,6 +452,112 @@
       "id": "option_3_free_shipping",
       "label": "Mostrar FREE Shipping",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors — Card"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#f0f8ff"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#c5d8ea"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_selected",
+      "label": "Card background (selected)",
+      "default": "#e4f2ff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_selected",
+      "label": "Card border (selected)",
+      "default": "#1a90f5"
+    },
+    {
+      "type": "color",
+      "id": "radio_color",
+      "label": "Radio dot (selected)",
+      "default": "#1a90f5"
+    },
+    {
+      "type": "header",
+      "content": "Colors — Text"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Header text (\"Buy More & Save!\")",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "header_line_color",
+      "label": "Header divider lines",
+      "default": "#c5d8ea"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Card title color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Card subtitle color",
+      "default": "#6a8099"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "compare_color",
+      "label": "Compare price color",
+      "default": "#8faabb"
+    },
+    {
+      "type": "header",
+      "content": "Colors — Badge"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge background",
+      "default": "#e53935"
+    },
+    {
+      "type": "color",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Colors — Shipping banner"
+    },
+    {
+      "type": "color",
+      "id": "shipping_bg",
+      "label": "Shipping banner background",
+      "default": "#1890ff"
+    },
+    {
+      "type": "color",
+      "id": "shipping_text",
+      "label": "Shipping banner text",
+      "default": "#ffffff"
     },
     {
       "type": "header",
