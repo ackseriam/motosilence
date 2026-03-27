@@ -363,7 +363,7 @@
         "settings": {
           "background": "#000000",
           "foreground_heading": "#ffffff",
-          "foreground": "#ffffffcf",
+          "foreground": "#ffffff",
           "primary": "#ffffff",
           "primary_hover": "#ffffff",
           "border": "#0000000f",
