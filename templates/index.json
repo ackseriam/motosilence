@@ -16,11 +16,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-<<<<<<< HEAD
-            "text": "<h2>Season Sale up to 70% OFF!</h2>",
-=======
-            "text": "<p>Explora nuestros últimos productos</p>",
->>>>>>> ad8a13e (feat: translate)
+            "text": "<h2>¡Oferta de temporada hasta 70% de descuento!</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -46,11 +42,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-<<<<<<< HEAD
-            "label": "Shop now 👉",
-=======
-            "label": "Ver todo",
->>>>>>> ad8a13e (feat: translate)
+            "label": "Comprar ahora 👉",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "link",

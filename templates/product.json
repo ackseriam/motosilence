@@ -545,8 +545,7 @@
       "type": "artevive-faq",
       "name": "Artevive FAQ",
       "settings": {
-<<<<<<< HEAD
-        "heading": "Frequently Asked Questions",
+        "heading": "Preguntas Frecuentes",
         "section_bg": "#ffffff",
         "heading_color": "#161723",
         "item_bg": "#e9e9e9",
@@ -557,20 +556,6 @@
         "border_width": 1,
         "border_radius": 8,
         "item_gap": 12,
-        "faq_1_question": "Why do I need earplugs for riding?",
-        "faq_1_answer": "You know that loud wind noise you experience at high speeds? Being exposed to that for even as little as 10 minutes can lead to that dreaded ear ringing. Which is not only annoying but leads to permanent hearing damage if repeated over time. Also called tinnitus it is something unfortunately too many experienced riders struggle with. That is why it's our mission to prevent that permanent ear ringing by providing the most rider friendly earplugs on the market.",
-        "faq_2_question": "How much noise do they reduce?",
-        "faq_2_answer": "The Artevive earplugs reduce up to 27 dB of harmful noise. This results in converting all the harsh noises like the wind noise down to a peaceful level. Allowing you to focus more on the ride, while still hearing the traffic around you and your intercom. You can also hold a normal conversation with the earplugs in as they don't reduce as much of the frequencies of the human voice.",
-        "faq_3_question": "Will my ears hurt after using them?",
-        "faq_3_answer": "No! That's the best part. Because they are made of medical grade soft silicone you will even forget that you are wearing them. Comfortable for all day wear.\n\n\nUnlike other earplugs they sit hidden in your ear cana so they dont rub against your helmet which is what causes the irritation with classic foam earplugs.",
-        "faq_4_question": "How does the 100 day guarantee work?",
-        "faq_4_answer": "You have a full 100 days to test drive the earplugs. Within that period if you feel like these are not the best earplugs you ever work (which we highly doubt) you can simply contact us and ask for a refund. info@arteviveearplugs.com",
-        "faq_5_question": "How long does shipping take?",
-        "faq_5_answer": "Shipping takes 5-7 business days along side a 1-2 day processing time.",
-        "faq_6_question": "Any further questions?",
-        "faq_6_answer": "Dont hesitate to reach out to our friendly customer support info@arteviveearplugs.com"
-=======
-        "heading": "Preguntas Frecuentes",
         "faq_1_question": "¿Por qué necesito tapones para conducir la moto?",
         "faq_1_answer": "¿Conoces ese ruido de viento ensordecedor que experimentas a altas velocidades? Estar expuesto a él durante tan solo 10 minutos puede provocar ese molesto pitido en los oídos. Algo que no solo resulta irritante, sino que provoca daños auditivos permanentes si se repite con el tiempo. También conocido como tinnitus, es algo con lo que desafortunadamente muchos motociclistas con experiencia tienen que lidiar. Por eso nuestra misión es prevenir ese pitido permanente ofreciendo los tapones más cómodos y pensados para los riders del mercado.",
         "faq_2_question": "¿Cuánto ruido reducen?",
@@ -583,7 +568,6 @@
         "faq_5_answer": "El envío tarda entre 5 y 7 días hábiles, más 1 o 2 días de procesamiento del pedido.",
         "faq_6_question": "¿Tienes alguna otra pregunta?",
         "faq_6_answer": "No dudes en contactar con nuestro equipo de atención al cliente en info@arteviveearplugs.com"
->>>>>>> ad8a13e (feat: translate)
       }
     },
     "1774585164557421fd": {
