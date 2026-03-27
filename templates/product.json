@@ -493,9 +493,13 @@
       "type": "artevive-features",
       "name": "Artevive Features",
       "settings": {
+        "main_image": "shopify://shop_images/gempages_519052065381549017-3d31114f-3447-4858-812b-08b8b0ab3dd8.webp",
         "heading": "Reduce wind noise, still hear the intercom & traffic",
+        "icon_1": "shopify://shop_images/gempages_519052065381549017-125253c1-8278-45cc-a87c-a6fd0e33ec26.webp",
         "feature_text_1": "Reducing the noise by 27 dB it is the perfect mix of offering hearing protection and letting enough sound through to still hear your music/intercom and the traffic arround you",
+        "icon_2": "shopify://shop_images/gempages_519052065381549017-74aace41-4e30-404b-a859-906291710844.webp",
         "feature_text_2": "Selective sound technology is the secret that allows you to hear everything while reducing the wind noise by a lot",
+        "icon_3": "shopify://shop_images/gempages_519052065381549017-5344159c-aef5-4a94-af34-606232962c59.webp",
         "feature_text_3": "Forget the one time use earplugs. These are reusable meaning you can use these for life!",
         "feature_text_4": ""
       }
