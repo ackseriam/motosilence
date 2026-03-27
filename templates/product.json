@@ -34,7 +34,7 @@
             "zoom": true,
             "video_loop": false,
             "hide_variants": true,
-            "show_review": false,
+            "show_review": true,
             "review_position": "2",
             "review_stars": 5,
             "review_text": "It calms the constant drone of the wind noise but allows me to hear traffic to stay safe",
