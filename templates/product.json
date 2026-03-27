@@ -478,12 +478,58 @@
         "feature_text_3": "Forget the one time use earplugs. These are reusable meaning you can use these for life!",
         "feature_text_4": ""
       }
+    },
+    "artevive_comparison_eprPiE": {
+      "type": "artevive-comparison",
+      "name": "Artevive Comparison",
+      "settings": {
+        "heading": "By Far The Best Choice",
+        "subheading": "It's easy to see why Artevive earplugs are the #1 choice for bikers compared to other options out there. Here is a comprehensive overview what you need to look for in perfect earplugs for riding.",
+        "us_label": "Us",
+        "others_label": "Others",
+        "row_1_feature": "Effective noise reduction",
+        "row_1_us": "check",
+        "row_1_others": "check",
+        "row_2_feature": "Hear intercom & traffic",
+        "row_2_us": "check",
+        "row_2_others": "cross",
+        "row_3_feature": "Comfortable under helmet",
+        "row_3_us": "check",
+        "row_3_others": "cross",
+        "row_4_feature": "4 Ear tip sizes",
+        "row_4_us": "check",
+        "row_4_others": "cross",
+        "row_5_feature": "100 days return guarantee",
+        "row_5_us": "check",
+        "row_5_others": "cross"
+      }
+    },
+    "artevive_faq_z4DpWL": {
+      "type": "artevive-faq",
+      "name": "Artevive FAQ",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "faq_1_question": "Why do I need earplugs for riding?",
+        "faq_1_answer": "You know that loud wind noise you experience at high speeds? Being exposed to that for even as little as 10 minutes can lead to that dreaded ear ringing. Which is not only annoying but leads to permanent hearing damage if repeated over time. Also called tinnitus it is something unfortunately too many experienced riders struggle with. That is why it's our mission to prevent that permanent ear ringing by providing the most rider friendly earplugs on the market.",
+        "faq_2_question": "How much noise do they reduce?",
+        "faq_2_answer": "The Artevive earplugs reduce up to 27 dB of harmful noise. This results in converting all the harsh noises like the wind noise down to a peaceful level. Allowing you to focus more on the ride, while still hearing the traffic around you and your intercom. You can also hold a normal conversation with the earplugs in as they don't reduce as much of the frequencies of the human voice.",
+        "faq_3_question": "Will my ears hurt after using them?",
+        "faq_3_answer": "",
+        "faq_4_question": "How does the 100 day guarantee work?",
+        "faq_4_answer": "",
+        "faq_5_question": "How long does shipping take?",
+        "faq_5_answer": "",
+        "faq_6_question": "Any further questions?",
+        "faq_6_answer": ""
+      }
     }
   },
   "order": [
     "main",
     "product_recommendations_qggXJq",
     "artevive_comfort_YcXynV",
-    "artevive_features_8Gy8ra"
+    "artevive_features_8Gy8ra",
+    "artevive_comparison_eprPiE",
+    "artevive_faq_z4DpWL"
   ]
 }
