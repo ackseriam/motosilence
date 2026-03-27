@@ -100,6 +100,63 @@
         "view_all_label": "View all"
       }
     },
+    "artevive_video_reviews_q3dU9y": {
+      "type": "artevive-video-reviews",
+      "blocks": {
+        "video_review_wLzE9w": {
+          "type": "video_review",
+          "settings": {
+            "video": "",
+            "reviewer_name": "Damien C.",
+            "rating": 5
+          }
+        },
+        "video_review_ChCXqx": {
+          "type": "video_review",
+          "settings": {
+            "video": "",
+            "reviewer_name": "Earl G.",
+            "rating": 5
+          }
+        },
+        "video_review_BJm8UP": {
+          "type": "video_review",
+          "settings": {
+            "video": "",
+            "reviewer_name": "David S.",
+            "rating": 5
+          }
+        },
+        "video_review_AgzJpW": {
+          "type": "video_review",
+          "settings": {
+            "video": "",
+            "reviewer_name": "Daniel S.",
+            "rating": 5
+          }
+        },
+        "video_review_G4tiMR": {
+          "type": "video_review",
+          "settings": {
+            "video": "",
+            "reviewer_name": "Kim D.",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "video_review_wLzE9w",
+        "video_review_ChCXqx",
+        "video_review_BJm8UP",
+        "video_review_AgzJpW",
+        "video_review_G4tiMR"
+      ],
+      "name": "Artevive Video Reviews",
+      "settings": {
+        "show_title": true,
+        "section_title": "What Our Riders Say"
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -298,6 +355,7 @@
   "order": [
     "hero_jVaWmY",
     "artevive_featured_collection_n73fBW",
+    "artevive_video_reviews_q3dU9y",
     "product_list_fa6P9H"
   ]
 }
