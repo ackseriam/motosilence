@@ -1,16 +1,24 @@
 {% comment %}
   Artevive Features Section — "Reduce wind noise, still hear the intercom & traffic"
   Layout: 2 columns — product image left, icon features right
-  BG: #F8F8F8
+  BG: customizable via settings
 {% endcomment %}
- 
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-<section class="art-features" id="art-features-section">
-  <div class="art-features__inner">
-    <div class="art-features__grid">
+<section
+  class="art-features"
+  id="art-features-section-{{ section.id }}"
+  style="
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="art-features__inner" style="max-width: {{ section.settings.max_width }}px;">
+    <div class="art-features__grid" style="gap: {{ section.settings.columns_gap }}px;">
 
       <!-- Left: Main product image -->
       <div class="art-features__image-col">
@@ -19,23 +27,27 @@
             src="{{ section.settings.main_image | img_url: 'master' }}"
             alt="{{ section.settings.main_image.alt | escape }}"
             class="art-features__main-image"
+            style="border-radius: {{ section.settings.image_radius }}px;"
             loading="lazy"
             width="600"
             height="600"
           >
         {% else %}
-          <div class="art-features__image-placeholder"></div>
+          <div class="art-features__image-placeholder" style="border-radius: {{ section.settings.image_radius }}px;"></div>
         {% endif %}
       </div>
 
       <!-- Right: Heading + feature items -->
       <div class="art-features__content-col">
-        <h2 class="art-features__heading">{{ section.settings.heading }}</h2>
+        <h2
+          class="art-features__heading"
+          style="
+            color: {{ section.settings.heading_color }};
+            font-size: {{ section.settings.heading_size }}px;
+          "
+        >{{ section.settings.heading }}</h2>
 
         <div class="art-features__items">
-
-          {% assign icon_keys = "icon_1,icon_2,icon_3,icon_4" | split: "," %}
-          {% assign text_keys = "feature_text_1,feature_text_2,feature_text_3,feature_text_4" | split: "," %}
 
           {% for i in (1..4) %}
             {% assign icon_key = "icon_" | append: i %}
@@ -44,20 +56,35 @@
             {% assign text_val = section.settings[text_key] %}
 
             {% if text_val != blank %}
-              <div class="art-features__item {% unless forloop.last %}art-features__item--border{% endunless %}">
-                <div class="art-features__icon-wrap">
+              <div
+                class="art-features__item {% unless forloop.last %}art-features__item--border{% endunless %}"
+                style="
+                  gap: {{ section.settings.icon_text_gap }}px;
+                  padding-top: {{ section.settings.item_padding_v }}px;
+                  padding-bottom: {{ section.settings.item_padding_v }}px;
+                  border-bottom-color: {{ section.settings.divider_color }};
+                "
+              >
+                <div class="art-features__icon-wrap" style="width: {{ section.settings.icon_size }}px; height: {{ section.settings.icon_size }}px;">
                   {% if icon_val != blank %}
                     <img
                       src="{{ icon_val | img_url: 'master' }}"
                       alt=""
                       class="art-features__icon"
+                      style="width: {{ section.settings.icon_size }}px; height: {{ section.settings.icon_size }}px;"
                       loading="lazy"
-                      width="65"
-                      height="65"
+                      width="{{ section.settings.icon_size }}"
+                      height="{{ section.settings.icon_size }}"
                     >
                   {% endif %}
                 </div>
-                <p class="art-features__item-text">{{ text_val }}</p>
+                <p
+                  class="art-features__item-text"
+                  style="
+                    color: {{ section.settings.text_color }};
+                    font-size: {{ section.settings.text_size }}px;
+                  "
+                >{{ text_val }}</p>
               </div>
             {% endif %}
           {% endfor %}
@@ -70,99 +97,83 @@
 </section>
 
 <style>
-  .art-features {
-    background-color: #F8F8F8;
+  #art-features-section-{{ section.id }} {
     font-family: 'Poppins', sans-serif;
   }
 
-  .art-features__inner {
-    max-width: 1200px;
+  #art-features-section-{{ section.id }} .art-features__inner {
     margin: 0 auto;
-    padding: 32px 40px 12px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .art-features__grid {
+  #art-features-section-{{ section.id }} .art-features__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
     align-items: center;
   }
 
-  /* --- Left image --- */
-  .art-features__image-col {
+  #art-features-section-{{ section.id }} .art-features__image-col {
     width: 100%;
   }
 
-  .art-features__main-image {
+  #art-features-section-{{ section.id }} .art-features__main-image {
     width: 100%;
     height: auto;
     display: block;
     object-fit: cover;
-    border-radius: 8px;
   }
 
-  .art-features__image-placeholder {
+  #art-features-section-{{ section.id }} .art-features__image-placeholder {
     width: 100%;
     aspect-ratio: 1 / 1;
     background-color: #e0e0e0;
-    border-radius: 8px;
   }
 
-  /* --- Right content --- */
-  .art-features__content-col {
+  #art-features-section-{{ section.id }} .art-features__content-col {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
 
-  .art-features__heading {
+  #art-features-section-{{ section.id }} .art-features__heading {
     font-family: 'Poppins', sans-serif;
-    font-size: 40px;
     font-weight: 600;
-    color: #161723;
     letter-spacing: 0.5px;
     line-height: 1.2;
     margin: 0;
   }
 
-  .art-features__items {
+  #art-features-section-{{ section.id }} .art-features__items {
     display: flex;
     flex-direction: column;
   }
 
-  .art-features__item {
+  #art-features-section-{{ section.id }} .art-features__item {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 20px;
-    padding: 18px 0;
   }
 
-  .art-features__item--border {
-    border-bottom: 1px solid #E5E7EB;
+  #art-features-section-{{ section.id }} .art-features__item--border {
+    border-bottom: 1px solid;
   }
 
-  .art-features__icon-wrap {
+  #art-features-section-{{ section.id }} .art-features__icon-wrap {
     flex-shrink: 0;
-    width: 65px;
-    height: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .art-features__icon {
-    width: 65px;
-    height: 65px;
+  #art-features-section-{{ section.id }} .art-features__icon {
     object-fit: contain;
     display: block;
   }
 
-  .art-features__item-text {
+  #art-features-section-{{ section.id }} .art-features__item-text {
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
     font-weight: 400;
-    color: #424153;
     letter-spacing: 0.5px;
     line-height: 1.6;
     margin: 0;
@@ -171,20 +182,21 @@
 
   /* --- Responsive --- */
   @media screen and (max-width: 749px) {
-    .art-features__inner {
-      padding: 32px 20px 12px;
+    #art-features-section-{{ section.id }} .art-features__inner {
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
-    .art-features__grid {
+    #art-features-section-{{ section.id }} .art-features__grid {
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 28px !important;
     }
 
-    .art-features__heading {
-      font-size: 28px;
+    #art-features-section-{{ section.id }} .art-features__heading {
+      font-size: {{ section.settings.heading_size | minus: 12 }}px;
     }
 
-    .art-features__image-col {
+    #art-features-section-{{ section.id }} .art-features__image-col {
       order: -1;
     }
   }
@@ -197,9 +209,157 @@
   "class": "artevive-features-section",
   "settings": [
     {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F8F8F8"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#161723"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Feature text color",
+      "default": "#424153"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider line color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 20,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Feature text font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Section max width",
+      "min": 800,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "label": "Gap between columns",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "item_padding_v",
+      "label": "Feature item vertical padding",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "icon_text_gap",
+      "label": "Gap: icon ↔ text",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
       "type": "image_picker",
       "id": "main_image",
       "label": "Main product image (left)"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 65
+    },
+    {
+      "type": "header",
+      "content": "Content"
     },
     {
       "type": "text",
