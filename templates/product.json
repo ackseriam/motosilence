@@ -475,20 +475,6 @@
         "padding-block-end": 48
       }
     },
-    "artevive_comfort_YcXynV": {
-      "type": "artevive-comfort",
-      "name": "Artevive Comfort",
-      "settings": {
-        "heading": "Comfort for all ears",
-        "bullet_1_title": "All day comfort under helmet",
-        "bullet_1_desc": "The earplug hides in your ear canal so it doesn't rub against the helmet, while still being able to easily insert and take out the earplug.",
-        "bullet_2_title": "4 Different sizes",
-        "bullet_2_desc": "Every order includes 4 different ear tip sizes (S-XL) to fit all ear types!",
-        "bullet_3_title": "No falling out",
-        "bullet_3_desc": "The ultra soft silicone adapts to your ear ensuring the earplugs stay in place all the time",
-        "product_image": "shopify://shop_images/gempages_519052065381549017-c45cba67-cb97-444c-bffc-04fd16dddd01.webp"
-      }
-    },
     "artevive_features_8Gy8ra": {
       "type": "artevive-features",
       "name": "Artevive Features",
@@ -502,6 +488,20 @@
         "icon_3": "shopify://shop_images/gempages_519052065381549017-5344159c-aef5-4a94-af34-606232962c59.webp",
         "feature_text_3": "Forget the one time use earplugs. These are reusable meaning you can use these for life!",
         "feature_text_4": ""
+      }
+    },
+    "artevive_comfort_YcXynV": {
+      "type": "artevive-comfort",
+      "name": "Artevive Comfort",
+      "settings": {
+        "heading": "Comfort for all ears",
+        "bullet_1_title": "All day comfort under helmet",
+        "bullet_1_desc": "The earplug hides in your ear canal so it doesn't rub against the helmet, while still being able to easily insert and take out the earplug.",
+        "bullet_2_title": "4 Different sizes",
+        "bullet_2_desc": "Every order includes 4 different ear tip sizes (S-XL) to fit all ear types!",
+        "bullet_3_title": "No falling out",
+        "bullet_3_desc": "The ultra soft silicone adapts to your ear ensuring the earplugs stay in place all the time",
+        "product_image": "shopify://shop_images/gempages_519052065381549017-c45cba67-cb97-444c-bffc-04fd16dddd01.webp"
       }
     },
     "artevive_comparison_eprPiE": {
@@ -552,8 +552,8 @@
   "order": [
     "main",
     "product_recommendations_qggXJq",
-    "artevive_comfort_YcXynV",
     "artevive_features_8Gy8ra",
+    "artevive_comfort_YcXynV",
     "artevive_comparison_eprPiE",
     "artevive_faq_z4DpWL"
   ]
