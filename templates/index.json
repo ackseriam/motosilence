@@ -96,9 +96,9 @@
       "name": "Artevive Featured Collection",
       "settings": {
         "section_title": "",
-        "collection": "",
+        "collection": "frontpage",
         "max_products": 4,
-        "view_all_label": "View all"
+        "view_all_label": "Ver todo"
       }
     },
     "artevive_video_reviews_q3dU9y": {
