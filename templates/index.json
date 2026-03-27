@@ -108,6 +108,7 @@
           "type": "video_review",
           "settings": {
             "video": "",
+            "poster": "shopify://shop_images/aamLQhXd__orig_thumb_ee455f79-5cec-440a-a50f-01d62641593a.jpg",
             "reviewer_name": "Damien C.",
             "rating": 5
           }
@@ -116,6 +117,7 @@
           "type": "video_review",
           "settings": {
             "video": "",
+            "poster": "shopify://shop_images/qT0HFBenC_orig_thumb_997af408-001a-4689-aba4-8e6f1cde19b5.jpg",
             "reviewer_name": "Earl G.",
             "rating": 5
           }
