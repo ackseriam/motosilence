@@ -38,7 +38,19 @@
           assign swatch_count = product_option.values | map: 'swatch' | compact | size
           assign variant_style = block_settings.variant_style
 
-          if swatch_count > 0 and block_settings.show_swatches
+          # Also activate swatch mode when variants have featured images and
+          # the theme setting "show_variant_image" is enabled, even without Shopify swatch data.
+          assign image_swatch_count = 0
+          if settings.show_variant_image and swatch_count == 0
+            for opt_val in product_option.values
+              if opt_val.variant.featured_media != blank
+                assign image_swatch_count = image_swatch_count | plus: 1
+              endif
+            endfor
+          endif
+          assign effective_swatch_count = swatch_count | plus: image_swatch_count
+
+          if effective_swatch_count > 0 and block_settings.show_swatches
             if block_settings.variant_style == 'dropdown'
               assign variant_style = 'swatch_dropdown'
             else
