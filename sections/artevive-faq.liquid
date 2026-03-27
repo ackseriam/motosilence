@@ -134,21 +134,18 @@
     transition: transform 0.2s ease;
   }
 
-  /* --- Body: grid-rows transition 0fr → 1fr --- */
+  /* --- Body: max-height collapse --- */
   .art-faq__body {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.5s ease;
+    max-height: 0;
     overflow: hidden;
+    transition: max-height 0.35s ease;
   }
 
-  .art-faq__body[aria-hidden="false"],
   .art-faq__body.art-faq--open {
-    grid-template-rows: 1fr;
+    max-height: 600px;
   }
 
   .art-faq__answer {
-    overflow: hidden;
     padding: 0 20px 18px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
