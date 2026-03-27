@@ -504,6 +504,15 @@
         "product_image": "shopify://shop_images/gempages_519052065381549017-c45cba67-cb97-444c-bffc-04fd16dddd01.webp"
       }
     },
+    "artevive_video_WzrwGf": {
+      "type": "artevive-video",
+      "name": "Artevive Video",
+      "settings": {
+        "heading": "How does it sound?",
+        "subtitle": "Press play on the video and hear what it's like to use Artevive earplugs on your ride.",
+        "video_url": ""
+      }
+    },
     "artevive_comparison_eprPiE": {
       "type": "artevive-comparison",
       "name": "Artevive Comparison",
@@ -554,6 +563,7 @@
     "product_recommendations_qggXJq",
     "artevive_features_8Gy8ra",
     "artevive_comfort_YcXynV",
+    "artevive_video_WzrwGf",
     "artevive_comparison_eprPiE",
     "artevive_faq_z4DpWL"
   ]
