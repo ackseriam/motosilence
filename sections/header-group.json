@@ -19,9 +19,9 @@
           "settings": {
             "text": "Welcome to our store",
             "link": "",
-            "font": "var(--font-body--family)",
+            "font": "var(--font-subheading--family)",
             "font_size": "1rem",
-            "weight": "",
+            "weight": "600",
             "letter_spacing": "normal",
             "case": "none"
           },
