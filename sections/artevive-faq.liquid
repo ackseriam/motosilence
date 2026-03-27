@@ -1,0 +1,331 @@
+{% comment %}
+  Artevive FAQ Section — "Frequently Asked Questions"
+  Accordion: CSS grid-rows transition (0fr → 1fr), vanilla JS only
+  BG: white. Single column. Card-style items with border + radius.
+{% endcomment %}
+
+<section class="art-faq" id="art-faq-section">
+  <div class="art-faq__inner">
+
+    <h2 class="art-faq__heading">{{ section.settings.heading }}</h2>
+
+    <div class="art-faq__list">
+
+      {% assign faq_count = 6 %}
+      {% for i in (1..faq_count) %}
+        {% assign q_key = "faq_" | append: i | append: "_question" %}
+        {% assign a_key = "faq_" | append: i | append: "_answer" %}
+        {% assign q_val = section.settings[q_key] %}
+        {% assign a_val = section.settings[a_key] %}
+
+        {% if q_val != blank %}
+          <div class="art-faq__item" id="art-faq-item-{{ i }}">
+            <button
+              class="art-faq__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="art-faq-body-{{ i }}"
+              id="art-faq-trigger-{{ i }}"
+            >
+              <span class="art-faq__question">{{ q_val }}</span>
+              <span class="art-faq__icon" aria-hidden="true">
+                <!-- Plus icon (closed) -->
+                <svg class="art-faq__icon-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#161723" stroke-width="2.2" stroke-linecap="round" width="18" height="18">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <!-- Minus icon (open) -->
+                <svg class="art-faq__icon-minus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#161723" stroke-width="2.2" stroke-linecap="round" width="18" height="18" style="display:none;">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </span>
+            </button>
+            <div
+              class="art-faq__body"
+              id="art-faq-body-{{ i }}"
+              role="region"
+              aria-labelledby="art-faq-trigger-{{ i }}"
+            >
+              <div class="art-faq__answer">{{ a_val }}</div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .art-faq {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .art-faq__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .art-faq__heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #161723;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* --- Accordion list --- */
+  .art-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* --- Each accordion item: card style --- */
+  .art-faq__item {
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  /* --- Trigger (header) --- */
+  .art-faq__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #161723;
+    letter-spacing: 0.69px;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+  }
+
+  .art-faq__trigger:hover {
+    color: #161723;
+  }
+
+  .art-faq__question {
+    flex: 1;
+  }
+
+  .art-faq__icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  /* --- Body: grid-rows transition 0fr → 1fr --- */
+  .art-faq__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease;
+    overflow: hidden;
+  }
+
+  .art-faq__body[aria-hidden="false"],
+  .art-faq__body.art-faq--open {
+    grid-template-rows: 1fr;
+  }
+
+  .art-faq__answer {
+    overflow: hidden;
+    padding: 0 20px 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #424153;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+  }
+
+  /* --- Responsive --- */
+  @media screen and (max-width: 749px) {
+    .art-faq__inner {
+      padding: 40px 16px;
+    }
+
+    .art-faq__heading {
+      font-size: 28px;
+    }
+
+    .art-faq__trigger {
+      font-size: 15px;
+      padding: 16px;
+    }
+
+    .art-faq__answer {
+      padding: 0 16px 16px;
+      font-size: 15px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var items = document.querySelectorAll('.art-faq__item');
+
+    items.forEach(function(item) {
+      var trigger = item.querySelector('.art-faq__trigger');
+      var body    = item.querySelector('.art-faq__body');
+      var plus    = item.querySelector('.art-faq__icon-plus');
+      var minus   = item.querySelector('.art-faq__icon-minus');
+
+      if (!trigger || !body) return;
+
+      trigger.addEventListener('click', function() {
+        var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        if (isOpen) {
+          // Close
+          trigger.setAttribute('aria-expanded', 'false');
+          body.classList.remove('art-faq--open');
+          if (plus)  plus.style.display  = 'block';
+          if (minus) minus.style.display = 'none';
+        } else {
+          // Open
+          trigger.setAttribute('aria-expanded', 'true');
+          body.classList.add('art-faq--open');
+          if (plus)  plus.style.display  = 'none';
+          if (minus) minus.style.display = 'block';
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Artevive FAQ",
+  "tag": "div",
+  "class": "artevive-faq-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "header",
+      "content": "Question 1"
+    },
+    {
+      "type": "text",
+      "id": "faq_1_question",
+      "label": "Question",
+      "default": "Why do I need earplugs for riding?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_answer",
+      "label": "Answer",
+      "default": "You know that loud wind noise you experience at high speeds? Being exposed to that for even as little as 10 minutes can lead to that dreaded ear ringing. Which is not only annoying but leads to permanent hearing damage if repeated over time. Also called tinnitus it is something unfortunately too many experienced riders struggle with. That is why it's our mission to prevent that permanent ear ringing by providing the most rider friendly earplugs on the market."
+    },
+    {
+      "type": "header",
+      "content": "Question 2"
+    },
+    {
+      "type": "text",
+      "id": "faq_2_question",
+      "label": "Question",
+      "default": "How much noise do they reduce?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_answer",
+      "label": "Answer",
+      "default": "The Artevive earplugs reduce up to 27 dB of harmful noise. This results in converting all the harsh noises like the wind noise down to a peaceful level. Allowing you to focus more on the ride, while still hearing the traffic around you and your intercom. You can also hold a normal conversation with the earplugs in as they don't reduce as much of the frequencies of the human voice."
+    },
+    {
+      "type": "header",
+      "content": "Question 3"
+    },
+    {
+      "type": "text",
+      "id": "faq_3_question",
+      "label": "Question",
+      "default": "Will my ears hurt after using them?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_answer",
+      "label": "Answer",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "Question 4"
+    },
+    {
+      "type": "text",
+      "id": "faq_4_question",
+      "label": "Question",
+      "default": "How does the 100 day guarantee work?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_4_answer",
+      "label": "Answer",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "Question 5"
+    },
+    {
+      "type": "text",
+      "id": "faq_5_question",
+      "label": "Question",
+      "default": "How long does shipping take?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_5_answer",
+      "label": "Answer",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "Question 6"
+    },
+    {
+      "type": "text",
+      "id": "faq_6_question",
+      "label": "Question",
+      "default": "Any further questions?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_6_answer",
+      "label": "Answer",
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artevive FAQ"
+    }
+  ]
+}
+{% endschema %}

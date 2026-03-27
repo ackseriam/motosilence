@@ -1,0 +1,456 @@
+{% comment %}
+  Artevive Comparison Table — "By Far The Best Choice"
+  3-column table: Feature | Us (light blue bg) | Others
+  BG: white
+{% endcomment %}
+
+<section class="art-comp" id="art-comparison-section">
+  <div class="art-comp__inner">
+
+    <div class="art-comp__header">
+      <h2 class="art-comp__heading">{{ section.settings.heading }}</h2>
+      <p class="art-comp__subheading">{{ section.settings.subheading }}</p>
+    </div>
+
+    <div class="art-comp__table-wrap">
+      <table class="art-comp__table" role="table">
+        <thead>
+          <tr class="art-comp__row art-comp__row--header">
+            <th class="art-comp__cell art-comp__cell--feature art-comp__cell--header-empty" scope="col"></th>
+            <th class="art-comp__cell art-comp__cell--us art-comp__cell--header" scope="col">
+              <div class="art-comp__col-header">
+                {% if section.settings.us_image != blank %}
+                  <img src="{{ section.settings.us_image | img_url: 'master' }}" alt="Artevive earplugs" class="art-comp__col-image" loading="lazy">
+                {% endif %}
+                <span class="art-comp__col-label">{{ section.settings.us_label }}</span>
+              </div>
+            </th>
+            <th class="art-comp__cell art-comp__cell--others art-comp__cell--header" scope="col">
+              <div class="art-comp__col-header">
+                {% if section.settings.others_image != blank %}
+                  <img src="{{ section.settings.others_image | img_url: 'master' }}" alt="Other earplugs" class="art-comp__col-image" loading="lazy">
+                {% endif %}
+                <span class="art-comp__col-label">{{ section.settings.others_label }}</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for i in (1..5) %}
+            {% assign feature_key = "row_" | append: i | append: "_feature" %}
+            {% assign us_key = "row_" | append: i | append: "_us" %}
+            {% assign others_key = "row_" | append: i | append: "_others" %}
+
+            {% assign feature_val = section.settings[feature_key] %}
+            {% assign us_val = section.settings[us_key] %}
+            {% assign others_val = section.settings[others_key] %}
+
+            {% if feature_val != blank %}
+              <tr class="art-comp__row art-comp__row--data">
+                <td class="art-comp__cell art-comp__cell--feature">{{ feature_val }}</td>
+                <td class="art-comp__cell art-comp__cell--us">
+                  {% if us_val == "check" %}
+                    <span class="art-comp__check" aria-label="Yes">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+                        <circle cx="12" cy="12" r="11" fill="#22C55E"/>
+                        <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      </svg>
+                    </span>
+                  {% elsif us_val == "cross" %}
+                    <span class="art-comp__cross" aria-label="No">&#x2715;</span>
+                  {% else %}
+                    {{ us_val }}
+                  {% endif %}
+                </td>
+                <td class="art-comp__cell art-comp__cell--others">
+                  {% if others_val == "check" %}
+                    <span class="art-comp__check" aria-label="Yes">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+                        <circle cx="12" cy="12" r="11" fill="#22C55E"/>
+                        <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      </svg>
+                    </span>
+                  {% elsif others_val == "cross" %}
+                    <span class="art-comp__cross" aria-label="No">&#x2715;</span>
+                  {% else %}
+                    {{ others_val }}
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .art-comp {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .art-comp__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* --- Header --- */
+  .art-comp__header {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .art-comp__heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #161723;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .art-comp__subheading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #424153;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  /* --- Table --- */
+  .art-comp__table-wrap {
+    border: 1px solid #D1D5DB;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .art-comp__table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  /* Column widths: features 50%, us 25%, others 25% */
+  .art-comp__cell--feature { width: 50%; }
+  .art-comp__cell--us      { width: 25%; }
+  .art-comp__cell--others  { width: 25%; }
+
+  .art-comp__cell {
+    padding: 16px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #242424;
+    text-align: center;
+    border-bottom: 1px solid #E5E7EB;
+    vertical-align: middle;
+  }
+
+  .art-comp__cell--feature {
+    text-align: left;
+  }
+
+  /* Last row: no bottom border */
+  .art-comp__row:last-child .art-comp__cell {
+    border-bottom: none;
+  }
+
+  /* "Us" column background */
+  .art-comp__cell--us {
+    background-color: #D6EBFA;
+  }
+
+  /* Header row */
+  .art-comp__cell--header {
+    padding: 20px 16px;
+    vertical-align: bottom;
+  }
+
+  .art-comp__cell--header-empty {
+    background-color: #ffffff;
+  }
+
+  .art-comp__col-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .art-comp__col-image {
+    width: 100px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .art-comp__col-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #242424;
+    letter-spacing: 0.5px;
+    display: block;
+  }
+
+  /* Checkmark & cross */
+  .art-comp__check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .art-comp__cross {
+    font-size: 20px;
+    color: #6B7280;
+    font-weight: 400;
+    display: inline-block;
+  }
+
+  /* --- Responsive --- */
+  @media screen and (max-width: 749px) {
+    .art-comp__inner {
+      padding: 40px 16px;
+    }
+
+    .art-comp__heading {
+      font-size: 28px;
+    }
+
+    .art-comp__subheading {
+      font-size: 15px;
+    }
+
+    .art-comp__cell {
+      padding: 12px 10px;
+      font-size: 14px;
+    }
+
+    .art-comp__col-label {
+      font-size: 20px;
+    }
+
+    .art-comp__col-image {
+      width: 70px;
+      height: 56px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Artevive Comparison",
+  "tag": "div",
+  "class": "artevive-comparison-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "By Far The Best Choice"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "It's easy to see why Artevive earplugs are the #1 choice for bikers compared to other options out there. Here is a comprehensive overview what you need to look for in perfect earplugs for riding."
+    },
+    {
+      "type": "header",
+      "content": "Column Headers"
+    },
+    {
+      "type": "image_picker",
+      "id": "us_image",
+      "label": "\"Us\" column image"
+    },
+    {
+      "type": "text",
+      "id": "us_label",
+      "label": "\"Us\" column label",
+      "default": "Us"
+    },
+    {
+      "type": "image_picker",
+      "id": "others_image",
+      "label": "\"Others\" column image"
+    },
+    {
+      "type": "text",
+      "id": "others_label",
+      "label": "\"Others\" column label",
+      "default": "Others"
+    },
+    {
+      "type": "header",
+      "content": "Row 1"
+    },
+    {
+      "type": "text",
+      "id": "row_1_feature",
+      "label": "Feature label",
+      "default": "Effective noise reduction"
+    },
+    {
+      "type": "select",
+      "id": "row_1_us",
+      "label": "Us value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_1_others",
+      "label": "Others value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "header",
+      "content": "Row 2"
+    },
+    {
+      "type": "text",
+      "id": "row_2_feature",
+      "label": "Feature label",
+      "default": "Hear intercom & traffic"
+    },
+    {
+      "type": "select",
+      "id": "row_2_us",
+      "label": "Us value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_2_others",
+      "label": "Others value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "header",
+      "content": "Row 3"
+    },
+    {
+      "type": "text",
+      "id": "row_3_feature",
+      "label": "Feature label",
+      "default": "Comfortable under helmet"
+    },
+    {
+      "type": "select",
+      "id": "row_3_us",
+      "label": "Us value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_3_others",
+      "label": "Others value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "header",
+      "content": "Row 4"
+    },
+    {
+      "type": "text",
+      "id": "row_4_feature",
+      "label": "Feature label",
+      "default": "4 Ear tip sizes"
+    },
+    {
+      "type": "select",
+      "id": "row_4_us",
+      "label": "Us value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_4_others",
+      "label": "Others value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "cross"
+    },
+    {
+      "type": "header",
+      "content": "Row 5"
+    },
+    {
+      "type": "text",
+      "id": "row_5_feature",
+      "label": "Feature label",
+      "default": "100 days return guarantee"
+    },
+    {
+      "type": "select",
+      "id": "row_5_us",
+      "label": "Us value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "row_5_others",
+      "label": "Others value",
+      "options": [
+        { "value": "check", "label": "Checkmark" },
+        { "value": "cross", "label": "Cross" }
+      ],
+      "default": "cross"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artevive Comparison"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,259 @@
+{% comment %}
+  Artevive Video Section — "How does it sound?"
+  Layout: 2 columns — video left (with custom play button), text right
+  BG: white
+{% endcomment %}
+
+<section class="art-video" id="art-video-section">
+  <div class="art-video__inner">
+    <div class="art-video__grid">
+
+      <!-- Left: Video player -->
+      <div class="art-video__video-col">
+        <div class="art-video__video-wrap" id="art-video-wrap">
+          <video
+            class="art-video__player"
+            id="art-video-player"
+            muted
+            playsinline
+            preload="none"
+            poster="{{ section.settings.video_poster | img_url: 'master' }}"
+          >
+            {% if section.settings.video_url != blank %}
+              <source src="{{ section.settings.video_url }}" type="video/mp4">
+            {% endif %}
+          </video>
+
+          <!-- Custom play/pause overlay -->
+          <button
+            class="art-video__play-btn"
+            id="art-video-play-btn"
+            aria-label="Play video"
+            type="button"
+          >
+            <svg class="art-video__play-icon" id="art-play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="art-video__pause-icon" id="art-pause-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="28" height="28" style="display:none;">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Text content -->
+      <div class="art-video__text-col">
+        <h2 class="art-video__heading">{{ section.settings.heading }}</h2>
+        <p class="art-video__subtitle">{{ section.settings.subtitle }}</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .art-video {
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .art-video__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .art-video__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* --- Video --- */
+  .art-video__video-col {
+    width: 100%;
+  }
+
+  .art-video__video-wrap {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #000;
+  }
+
+  .art-video__player {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  .art-video__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    border: none;
+    border-radius: 4px;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.3s ease;
+    z-index: 2;
+    padding: 0;
+  }
+
+  .art-video__play-btn:hover {
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+
+  .art-video__video-wrap.art-video--playing .art-video__play-btn {
+    opacity: 0;
+  }
+
+  .art-video__video-wrap.art-video--playing:hover .art-video__play-btn {
+    opacity: 1;
+  }
+
+  .art-video__play-icon,
+  .art-video__pause-icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* --- Text --- */
+  .art-video__text-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .art-video__heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #161723;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .art-video__subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #424153;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* --- Responsive --- */
+  @media screen and (max-width: 749px) {
+    .art-video__inner {
+      padding: 40px 20px;
+    }
+
+    .art-video__grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .art-video__heading {
+      font-size: 28px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var wrap = document.getElementById('art-video-wrap');
+    var video = document.getElementById('art-video-player');
+    var btn = document.getElementById('art-video-play-btn');
+    var playIcon = document.getElementById('art-play-icon');
+    var pauseIcon = document.getElementById('art-pause-icon');
+
+    if (!video || !btn) return;
+
+    function setPlaying(playing) {
+      if (playing) {
+        wrap.classList.add('art-video--playing');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        btn.setAttribute('aria-label', 'Pause video');
+      } else {
+        wrap.classList.remove('art-video--playing');
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        btn.setAttribute('aria-label', 'Play video');
+      }
+    }
+
+    btn.addEventListener('click', function() {
+      if (video.paused) {
+        video.play();
+        setPlaying(true);
+      } else {
+        video.pause();
+        setPlaying(false);
+      }
+    });
+
+    video.addEventListener('ended', function() {
+      setPlaying(false);
+    });
+
+    video.addEventListener('pause', function() {
+      setPlaying(false);
+    });
+
+    video.addEventListener('play', function() {
+      setPlaying(true);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Artevive Video",
+  "tag": "div",
+  "class": "artevive-video-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How does it sound?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Press play on the video and hear what it's like to use Artevive earplugs on your ride."
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video poster image"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (.mp4)",
+      "info": "Paste the direct CDN URL to the video file"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artevive Video"
+    }
+  ]
+}
+{% endschema %}

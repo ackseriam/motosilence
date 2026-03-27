@@ -1,0 +1,277 @@
+{% comment %}
+  Artevive Features Section — "Reduce wind noise, still hear the intercom & traffic"
+  Layout: 2 columns — product image left, icon features right
+  BG: #F8F8F8
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<section class="art-features" id="art-features-section">
+  <div class="art-features__inner">
+    <div class="art-features__grid">
+
+      <!-- Left: Main product image -->
+      <div class="art-features__image-col">
+        {% if section.settings.main_image != blank %}
+          <img
+            src="{{ section.settings.main_image | img_url: 'master' }}"
+            alt="{{ section.settings.main_image.alt | escape }}"
+            class="art-features__main-image"
+            loading="lazy"
+            width="600"
+            height="600"
+          >
+        {% else %}
+          <div class="art-features__image-placeholder"></div>
+        {% endif %}
+      </div>
+
+      <!-- Right: Heading + feature items -->
+      <div class="art-features__content-col">
+        <h2 class="art-features__heading">{{ section.settings.heading }}</h2>
+
+        <div class="art-features__items">
+
+          {% assign icon_keys = "icon_1,icon_2,icon_3,icon_4" | split: "," %}
+          {% assign text_keys = "feature_text_1,feature_text_2,feature_text_3,feature_text_4" | split: "," %}
+
+          {% for i in (1..4) %}
+            {% assign icon_key = "icon_" | append: i %}
+            {% assign text_key = "feature_text_" | append: i %}
+            {% assign icon_val = section.settings[icon_key] %}
+            {% assign text_val = section.settings[text_key] %}
+
+            {% if text_val != blank %}
+              <div class="art-features__item {% unless forloop.last %}art-features__item--border{% endunless %}">
+                <div class="art-features__icon-wrap">
+                  {% if icon_val != blank %}
+                    <img
+                      src="{{ icon_val | img_url: 'master' }}"
+                      alt=""
+                      class="art-features__icon"
+                      loading="lazy"
+                      width="65"
+                      height="65"
+                    >
+                  {% endif %}
+                </div>
+                <p class="art-features__item-text">{{ text_val }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .art-features {
+    background-color: #F8F8F8;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .art-features__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 40px 12px;
+  }
+
+  .art-features__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  /* --- Left image --- */
+  .art-features__image-col {
+    width: 100%;
+  }
+
+  .art-features__main-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .art-features__image-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+  }
+
+  /* --- Right content --- */
+  .art-features__content-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .art-features__heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #161723;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .art-features__items {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .art-features__item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 18px 0;
+  }
+
+  .art-features__item--border {
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  .art-features__icon-wrap {
+    flex-shrink: 0;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .art-features__icon {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .art-features__item-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #424153;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    margin: 0;
+    padding-top: 4px;
+  }
+
+  /* --- Responsive --- */
+  @media screen and (max-width: 749px) {
+    .art-features__inner {
+      padding: 32px 20px 12px;
+    }
+
+    .art-features__grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .art-features__heading {
+      font-size: 28px;
+    }
+
+    .art-features__image-col {
+      order: -1;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Artevive Features",
+  "tag": "div",
+  "class": "artevive-features-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main product image (left)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Reduce wind noise, still hear the intercom & traffic"
+    },
+    {
+      "type": "header",
+      "content": "Feature 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_1",
+      "label": "Icon 1 (–27 dB)"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_text_1",
+      "label": "Feature 1 text",
+      "default": "Reducing the noise by 27 dB it is the perfect mix of offering hearing protection and letting enough sound through to still hear your music/intercom and the traffic arround you"
+    },
+    {
+      "type": "header",
+      "content": "Feature 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_2",
+      "label": "Icon 2 (sound waves)"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_text_2",
+      "label": "Feature 2 text",
+      "default": "Selective sound technology is the secret that allows you to hear everything while reducing the wind noise by a lot"
+    },
+    {
+      "type": "header",
+      "content": "Feature 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_3",
+      "label": "Icon 3 (reusable)"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_text_3",
+      "label": "Feature 3 text",
+      "default": "Forget the one time use earplugs. These are reusable meaning you can use these for life!"
+    },
+    {
+      "type": "header",
+      "content": "Feature 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_4",
+      "label": "Icon 4"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_text_4",
+      "label": "Feature 4 text",
+      "default": ""
+    }
+  ],
+  "presets": [
+    {
+      "name": "Artevive Features"
+    }
+  ]
+}
+{% endschema %}
