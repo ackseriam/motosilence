@@ -8,7 +8,7 @@
     Text muted:   rgba(18,18,18,0.75)
     Sale price:   #e3001b
     Badge bg:     #121212
-    Badge text:   #ffffff
+    Badge text:   #ffffff 
     Stars fill:   #e3001b
     Stars empty:  #d1d1d1
     Button bg:    #00adef
@@ -77,10 +77,11 @@
                 <div class="art-fc__rating"
                      title="{{ rating_num }} rating ({{ rating_count }} votes)">
                   <div class="art-fc__stars" aria-hidden="true">
-                    {%- for i in (1..5) -%}
+                    {%- assign half_star_pos = full_stars | plus: 1 -%}
+                  {%- for i in (1..5) -%}
                       {%- if i <= full_stars -%}
                         <svg class="art-star art-star--full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                      {%- elsif half_check >= 0.5 and i == full_stars | plus: 1 -%}
+                      {%- elsif half_check >= 0.5 and i == half_star_pos -%}
                         <svg class="art-star art-star--half" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <defs><linearGradient id="art-half-{{ section.id }}-{{ forloop.index }}"><stop offset="50%" stop-color="#e3001b"/><stop offset="50%" stop-color="#d1d1d1"/></linearGradient></defs>
                           <path fill="url(#art-half-{{ section.id }}-{{ forloop.index }})" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -459,15 +460,14 @@
 
 {% schema %}
 {
-  "name": "Artevive Featured Collection",
+  "name": "Featured Collection",
   "tag": "div",
-  "class": "artevive-featured-collection-section",
+  "class": "featured-collection-section",
   "settings": [
     {
       "type": "text",
       "id": "section_title",
-      "label": "Section title",
-      "default": ""
+      "label": "Section title"
     },
     {
       "type": "collection",
