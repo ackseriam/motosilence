@@ -158,6 +158,31 @@
               },
               "blocks": {}
             },
+            "checklist_GFdKxU": {
+              "type": "checklist",
+              "name": "Checklist",
+              "settings": {
+                "heading": "Reduce wind noise & ear ringing",
+                "heading_color": "#161723",
+                "heading_size": 24,
+                "heading_gap": 14,
+                "item_1": "Reducing harmful wind noise",
+                "item_2": "You can still hear the intercom and traffic",
+                "item_3": "All day comfort under helmet",
+                "item_4": "100-Days Money Back Guarantee",
+                "item_5": "",
+                "item_6": "",
+                "icon_color": "#3BBBF0",
+                "icon_size": 22,
+                "icon_gap": 10,
+                "text_color": "#424153",
+                "text_size": 16,
+                "items_gap": 10,
+                "padding_top": 0,
+                "padding_bottom": 0
+              },
+              "blocks": {}
+            },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -272,6 +297,7 @@
           "block_order": [
             "group_icgrde",
             "divider_VJhene",
+            "checklist_GFdKxU",
             "variant_picker_R3rGDr",
             "bundle_picker_H9yKrz",
             "buy_buttons_eYQEYi",
