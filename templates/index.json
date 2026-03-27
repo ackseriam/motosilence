@@ -135,6 +135,7 @@
           "type": "video_review",
           "settings": {
             "video": "",
+            "poster": "shopify://shop_images/5ZH9t_EsL_Wpte0naKq_orig_thumb_f175f9e9-9cea-4326-b32b-e8e6b960a158.jpg",
             "reviewer_name": "Daniel S.",
             "rating": 5
           }
@@ -143,6 +144,7 @@
           "type": "video_review",
           "settings": {
             "video": "",
+            "poster": "shopify://shop_images/GJbOpDVlO_wAHq8wZb1_orig_thumb_ad24d297-f70f-4f6a-a4f7-ee4502071657.jpg",
             "reviewer_name": "Kim D.",
             "rating": 5
           }
