@@ -17,7 +17,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Season Sale up to 70% OFF!",
+            "text": "¡Rebajas de temporada con hasta un 70% de descuento!",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "1rem",
