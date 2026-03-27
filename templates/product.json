@@ -33,7 +33,7 @@
             "extend_media": false,
             "zoom": true,
             "video_loop": false,
-            "hide_variants": true,
+            "hide_variants": false,
             "show_review": true,
             "review_position": "2",
             "review_stars": 5,
