@@ -90,6 +90,16 @@
         "padding-block-end": 72
       }
     },
+    "artevive_featured_collection_n73fBW": {
+      "type": "artevive-featured-collection",
+      "name": "Artevive Featured Collection",
+      "settings": {
+        "section_title": "",
+        "collection": "",
+        "max_products": 4,
+        "view_all_label": "View all"
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -287,6 +297,7 @@
   },
   "order": [
     "hero_jVaWmY",
+    "artevive_featured_collection_n73fBW",
     "product_list_fa6P9H"
   ]
 }
